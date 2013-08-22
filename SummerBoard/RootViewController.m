@@ -1,12 +1,12 @@
 /*****************************************************************************
  *
- * FILE:	main.m
- * DESCRIPTION:	SummerBoard: The iPhone Application Primitive Main
+ * FILE:	RootViewController.m
+ * DESCRIPTION:	SummerBoard: Application Root View Controller
  * DATE:	Mon, Aug 19 2013
  * UPDATED:	Mon, Aug 19 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
- * URL:		http://www.MagickWorX.COM/
+ * URL:		http://www.iPhone.MagickWorX.COM/
  * COPYRIGHT:	(c) 2013 阿部康一／Kouichi ABE (WALL), All rights reserved.
  * LICENSE:
  *
@@ -36,18 +36,70 @@
  *   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  *   THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: main.m,v 1.1 2013/07/25 17:37:22 kouichi Exp $
+ * $Id: RootViewController.m,v 1.3 2013/08/19 05:29:25 kouichi Exp $
  *
  *****************************************************************************/
 
-#import <UIKit/UIKit.h>
+#import "RootViewController.h"
+#import "CollectionView.h"
 
-#import "AppDelegate.h"
-
-int
-main(int argc, char * argv[])
+@interface RootViewController ()
 {
-  @autoreleasepool {
-    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-  }
+@private
+  CollectionView *	_collectionView;
 }
+@property (nonatomic,retain) CollectionView *	collectionView;
+@end
+
+@implementation RootViewController
+
+-(id)init
+{
+  self = [super init];
+  if (self != nil) {
+    self.title	= NSLocalizedString(@"SummerBoard", @"");
+  }
+  return self;
+}
+
+-(void)dealloc
+{
+  if ([_collectionView superview]) { [_collectionView removeFromSuperview]; }
+
+  [_collectionView release];
+  [super dealloc];
+}
+
+-(void)didReceiveMemoryWarning
+{
+  /*
+   * Invoke super's implementation to do the Right Thing,
+   * but also release the input controller since we can do that.
+   * In practice this is unlikely to be used in this application,
+   * and it would be of little benefit,
+   * but the principle is the important thing.
+   */
+  [super didReceiveMemoryWarning];
+}
+
+-(void)loadView
+{
+  [super loadView];
+
+  CGRect	frame = self.view.bounds;
+  frame.size.height  -= [[self navigationController] navigationBar].bounds.size.height;
+
+  CollectionView *	collectionView;
+  collectionView = [[CollectionView alloc] initWithFrame:frame];
+  [self.view addSubview:collectionView];
+  self.collectionView = collectionView;
+  [collectionView release];
+}
+
+-(void)viewDidLoad
+{
+  [super viewDidLoad];
+}
+
+/*****************************************************************************/
+@end

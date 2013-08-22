@@ -1,9 +1,9 @@
 /*****************************************************************************
  *
- * FILE:	main.m
- * DESCRIPTION:	SummerBoard: The iPhone Application Primitive Main
- * DATE:	Mon, Aug 19 2013
- * UPDATED:	Mon, Aug 19 2013
+ * FILE:	CollectionLayout.h
+ * DESCRIPTION:	SummerBoard: UICollectionViewFlowLayout Subclass
+ * DATE:	Tue, Aug 20 2013
+ * UPDATED:	Thu, Aug 22 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
@@ -36,18 +36,22 @@
  *   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  *   THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: main.m,v 1.1 2013/07/25 17:37:22 kouichi Exp $
+ * $Id: CollectionView.h,v 1.1 2013/01/15 19:37:50 kouichi Exp $
  *
  *****************************************************************************/
 
-#import <UIKit/UIKit.h>
+typedef void (^CollectionLayoutHoldHandler)(UIGestureRecognizerState state);
+typedef void (^CollectionLayoutMoveHandler)(NSIndexPath * fromIndexPath, NSIndexPath * toIndexPath);
+typedef void (^CollectionLayoutEndHandler)(NSIndexPath * toIndexPath);
 
-#import "AppDelegate.h"
-
-int
-main(int argc, char * argv[])
+@interface CollectionLayout : UICollectionViewFlowLayout
 {
-  @autoreleasepool {
-    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-  }
+@private
+  CollectionLayoutHoldHandler	_holdHandler;
+  CollectionLayoutMoveHandler	_moveHandler;
+  CollectionLayoutEndHandler	_endHandler;
 }
+@property (nonatomic,copy) CollectionLayoutHoldHandler	holdHandler;
+@property (nonatomic,copy) CollectionLayoutMoveHandler	moveHandler;
+@property (nonatomic,copy) CollectionLayoutEndHandler	endHandler;
+@end

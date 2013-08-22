@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B32B40ED17C33BA10090557D /* CollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B32B40EC17C33BA10090557D /* CollectionLayout.m */; };
+		B334D60217C620F500492F41 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B334D60117C620F500492F41 /* Icon@2x.png */; };
+		B334D60417C620FA00492F41 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B334D60317C620FA00492F41 /* Icon.png */; };
 		B385C95317C1E83700DD5783 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B385C95217C1E83700DD5783 /* UIKit.framework */; };
 		B385C95517C1E83700DD5783 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B385C95417C1E83700DD5783 /* Foundation.framework */; };
 		B385C95717C1E83800DD5783 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B385C95617C1E83800DD5783 /* CoreGraphics.framework */; };
@@ -16,9 +19,17 @@
 		B385C96517C1E83800DD5783 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B385C96417C1E83800DD5783 /* Default.png */; };
 		B385C96717C1E83800DD5783 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B385C96617C1E83800DD5783 /* Default@2x.png */; };
 		B385C96917C1E83800DD5783 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B385C96817C1E83800DD5783 /* Default-568h@2x.png */; };
+		B385C97017C1E85000DD5783 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B385C96F17C1E85000DD5783 /* QuartzCore.framework */; };
+		B385C97317C208B000DD5783 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B385C97217C208B000DD5783 /* RootViewController.m */; };
+		B385C97817C208BA00DD5783 /* CollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B385C97517C208BA00DD5783 /* CollectionCell.m */; };
+		B385C97917C208BA00DD5783 /* CollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = B385C97717C208BA00DD5783 /* CollectionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B32B40EB17C33BA10090557D /* CollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionLayout.h; sourceTree = "<group>"; };
+		B32B40EC17C33BA10090557D /* CollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionLayout.m; sourceTree = "<group>"; };
+		B334D60117C620F500492F41 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		B334D60317C620FA00492F41 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		B385C94F17C1E83700DD5783 /* SummerBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SummerBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B385C95217C1E83700DD5783 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B385C95417C1E83700DD5783 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -32,6 +43,13 @@
 		B385C96417C1E83800DD5783 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		B385C96617C1E83800DD5783 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B385C96817C1E83800DD5783 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B385C96F17C1E85000DD5783 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B385C97117C208B000DD5783 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		B385C97217C208B000DD5783 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		B385C97417C208BA00DD5783 /* CollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionCell.h; sourceTree = "<group>"; };
+		B385C97517C208BA00DD5783 /* CollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionCell.m; sourceTree = "<group>"; };
+		B385C97617C208BA00DD5783 /* CollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionView.h; sourceTree = "<group>"; };
+		B385C97717C208BA00DD5783 /* CollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B385C97017C1E85000DD5783 /* QuartzCore.framework in Frameworks */,
 				B385C95317C1E83700DD5783 /* UIKit.framework in Frameworks */,
 				B385C95517C1E83700DD5783 /* Foundation.framework in Frameworks */,
 				B385C95717C1E83800DD5783 /* CoreGraphics.framework in Frameworks */,
@@ -51,6 +70,8 @@
 		B385C94617C1E83700DD5783 = {
 			isa = PBXGroup;
 			children = (
+				B334D60317C620FA00492F41 /* Icon.png */,
+				B334D60117C620F500492F41 /* Icon@2x.png */,
 				B385C95817C1E83800DD5783 /* SummerBoard */,
 				B385C95117C1E83700DD5783 /* Frameworks */,
 				B385C95017C1E83700DD5783 /* Products */,
@@ -68,6 +89,7 @@
 		B385C95117C1E83700DD5783 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B385C96F17C1E85000DD5783 /* QuartzCore.framework */,
 				B385C95217C1E83700DD5783 /* UIKit.framework */,
 				B385C95417C1E83700DD5783 /* Foundation.framework */,
 				B385C95617C1E83800DD5783 /* CoreGraphics.framework */,
@@ -78,6 +100,14 @@
 		B385C95817C1E83800DD5783 /* SummerBoard */ = {
 			isa = PBXGroup;
 			children = (
+				B32B40EB17C33BA10090557D /* CollectionLayout.h */,
+				B32B40EC17C33BA10090557D /* CollectionLayout.m */,
+				B385C97417C208BA00DD5783 /* CollectionCell.h */,
+				B385C97517C208BA00DD5783 /* CollectionCell.m */,
+				B385C97617C208BA00DD5783 /* CollectionView.h */,
+				B385C97717C208BA00DD5783 /* CollectionView.m */,
+				B385C97117C208B000DD5783 /* RootViewController.h */,
+				B385C97217C208B000DD5783 /* RootViewController.m */,
 				B385C96117C1E83800DD5783 /* AppDelegate.h */,
 				B385C96217C1E83800DD5783 /* AppDelegate.m */,
 				B385C95917C1E83800DD5783 /* Supporting Files */,
@@ -154,6 +184,8 @@
 				B385C96517C1E83800DD5783 /* Default.png in Resources */,
 				B385C96717C1E83800DD5783 /* Default@2x.png in Resources */,
 				B385C96917C1E83800DD5783 /* Default-568h@2x.png in Resources */,
+				B334D60217C620F500492F41 /* Icon@2x.png in Resources */,
+				B334D60417C620FA00492F41 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +198,10 @@
 			files = (
 				B385C95F17C1E83800DD5783 /* main.m in Sources */,
 				B385C96317C1E83800DD5783 /* AppDelegate.m in Sources */,
+				B385C97317C208B000DD5783 /* RootViewController.m in Sources */,
+				B385C97817C208BA00DD5783 /* CollectionCell.m in Sources */,
+				B385C97917C208BA00DD5783 /* CollectionView.m in Sources */,
+				B32B40ED17C33BA10090557D /* CollectionLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +314,7 @@
 				B385C96E17C1E83800DD5783 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

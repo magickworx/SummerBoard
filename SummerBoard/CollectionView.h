@@ -1,7 +1,7 @@
 /*****************************************************************************
  *
- * FILE:	main.m
- * DESCRIPTION:	SummerBoard: The iPhone Application Primitive Main
+ * FILE:	CollectionView.h
+ * DESCRIPTION:	SummerBoard: Collection View Class
  * DATE:	Mon, Aug 19 2013
  * UPDATED:	Mon, Aug 19 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
@@ -36,18 +36,9 @@
  *   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  *   THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: main.m,v 1.1 2013/07/25 17:37:22 kouichi Exp $
+ * $Id: CollectionView.h,v 1.1 2013/01/15 19:37:50 kouichi Exp $
  *
  *****************************************************************************/
 
-#import <UIKit/UIKit.h>
-
-#import "AppDelegate.h"
-
-int
-main(int argc, char * argv[])
-{
-  @autoreleasepool {
-    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-  }
-}
+@interface CollectionView : UIView
+@end

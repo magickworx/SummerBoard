@@ -1,9 +1,9 @@
 /*****************************************************************************
  *
- * FILE:	main.m
- * DESCRIPTION:	SummerBoard: The iPhone Application Primitive Main
+ * FILE:	CollectionCell.h
+ * DESCRIPTION:	SummerBoard: UICollectionViewCell Subclass
  * DATE:	Mon, Aug 19 2013
- * UPDATED:	Mon, Aug 19 2013
+ * UPDATED:	Tue, Aug 20 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
@@ -36,18 +36,29 @@
  *   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  *   THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: main.m,v 1.1 2013/07/25 17:37:22 kouichi Exp $
+ * $Id: CollectionView.h,v 1.1 2013/01/15 19:37:50 kouichi Exp $
  *
  *****************************************************************************/
 
-#import <UIKit/UIKit.h>
+extern NSString * const	collectionCellIdentifier;
 
-#import "AppDelegate.h"
+@class	CollectionCell;
 
-int
-main(int argc, char * argv[])
+typedef void (^CollectionCellDeleteHandler)(CollectionCell * cell);
+
+@interface CollectionCell : UICollectionViewCell
 {
-  @autoreleasepool {
-    return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-  }
+@private
+  CollectionCellDeleteHandler	_deleteHandler;
+
+  UILabel *	_label;
+
+  BOOL		_vibrated;
 }
+@property (nonatomic,copy)  CollectionCellDeleteHandler	deleteHandler;
+@property (nonatomic,retain,readonly) UILabel *	label;
+@property (nonatomic,getter=isVibrated) BOOL	vibrated;
+
+-(UIImage *)rasterizedImage;
+
+@end
