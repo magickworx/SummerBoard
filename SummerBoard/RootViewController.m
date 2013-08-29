@@ -87,7 +87,9 @@
   [super loadView];
 
   CGRect	frame = self.view.bounds;
+#if	0
   frame.size.height  -= [[self navigationController] navigationBar].bounds.size.height;
+#endif
 
   CollectionView *	collectionView;
   collectionView = [[CollectionView alloc] initWithFrame:frame];
