@@ -3,7 +3,7 @@
  * FILE:	CollectionLayout.m
  * DESCRIPTION:	SummerBoard: UICollectionViewFlowLayout Subclass
  * DATE:	Tue, Aug 20 2013
- * UPDATED:	Thu, Aug 22 2013
+ * UPDATED:	Thu, Aug 29 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
@@ -65,12 +65,14 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   kScrollingDirectionRight
 };
 
-#define	kFramePerSecond	60.0
+#define	kFramePerSecond	60.0f
 
+// カテゴリに独自のメンバ変数を持つ
 @interface CADisplayLink (Extension_userInfo)
 @property (nonatomic,copy) NSDictionary *	userInfo;
 @end
 
+// カテゴリに独自のメンバ変数を持つ実装方法
 @implementation CADisplayLink (Extension_userInfo)
 -(void)setUserInfo:(NSDictionary *)userInfo
 {
@@ -91,7 +93,7 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   CGFloat		_scrollingSpeed;
   UIEdgeInsets		_scrollingTriggerEdgeInsets;
 
-  NSIndexPath *	_selectedItemIndexPath;
+  NSIndexPath *	_selectedIndexPath;
   NSIndexPath *	_fromIndexPath;
   NSIndexPath *	_toIndexPath;
   UIImageView *	_mockView;
@@ -104,10 +106,10 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
 
   BOOL	_editing;
 }
-@property (nonatomic,retain)  CADisplayLink *	displayLink;
+@property (nonatomic,retain) CADisplayLink *	displayLink;
 @property (nonatomic,assign) CGFloat		scrollingSpeed;
 @property (nonatomic,assign) UIEdgeInsets	scrollingTriggerEdgeInsets;
-@property (nonatomic,retain) NSIndexPath *	selectedItemIndexPath;
+@property (nonatomic,retain) NSIndexPath *	selectedIndexPath;
 @property (nonatomic,retain) NSIndexPath *	fromIndexPath;
 @property (nonatomic,retain) NSIndexPath *	toIndexPath;
 @property (nonatomic,retain) UIImageView *	mockView;
@@ -153,7 +155,7 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   [_moveHandler release];
   [_endHandler release];
   [_displayLink release];
-  [_selectedItemIndexPath release];
+  [_selectedIndexPath release];
   [_fromIndexPath release];
   [_toIndexPath release];
   [_mockView release];
@@ -195,7 +197,7 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
 {
   switch (layoutAttributes.representedElementCategory) {
     case UICollectionElementCategoryCell:
-      if ([layoutAttributes.indexPath isEqual:self.selectedItemIndexPath]) {
+      if ([layoutAttributes.indexPath isEqual:self.selectedIndexPath]) {
 	layoutAttributes.hidden = YES;
       }
       break;
@@ -231,7 +233,7 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
 
 /*****************************************************************************/
 
-#pragma mark - Key-Value Observing methods
+#pragma mark Key-Value Observing methods
 -(void)observeValueForKeyPath:(NSString *)keyPath
 	ofObject:(id)object
 	change:(NSDictionary *)change
@@ -329,15 +331,15 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
       break;
   }
 
-  self.mockViewCenter = CGPointAdd(self.mockViewCenter, translation);
+  self.mockViewCenter  = CGPointAdd(self.mockViewCenter, translation);
   self.mockView.center = CGPointAdd(self.mockViewCenter, self.panTranslation);
   self.collectionView.contentOffset = CGPointAdd(contentOffset, translation);
 }
 
 -(void)validateScrollTimer
 {
-  CGRect	bounds = self.collectionView.bounds;
-  CGPoint	viewCenter = self.mockView.center;
+  CGRect  bounds     = self.collectionView.bounds;
+  CGPoint viewCenter = self.mockView.center;
 
   switch (self.scrollDirection) {
     case UICollectionViewScrollDirectionVertical:
@@ -370,12 +372,13 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
 -(void)prepareForMovingItemAtPoint:(CGPoint)point
 {
   NSIndexPath * indexPath = [self.collectionView indexPathForItemAtPoint:point];
-  self.selectedItemIndexPath = indexPath;
-  self.toIndexPath	= indexPath;
-  self.fromIndexPath	= indexPath;
+  self.selectedIndexPath  = indexPath;
+  self.toIndexPath	  = indexPath;
+  self.fromIndexPath	  = indexPath;
 
   CollectionCell * cell = (CollectionCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
 
+  // ドラッグ時のダミー画像を作成
   UIImageView * imageView;
   imageView = [[UIImageView alloc] initWithImage:[cell rasterizedImage]];
   imageView.frame = cell.frame;
@@ -403,14 +406,14 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
 -(void)moveItem
 {
   NSIndexPath * newIndexPath = [self.collectionView indexPathForItemAtPoint:self.mockView.center];
-  self.toIndexPath	= newIndexPath;
-  self.fromIndexPath	= self.selectedItemIndexPath;
+  self.toIndexPath   = newIndexPath;
+  self.fromIndexPath = self.selectedIndexPath;
 
   if ((newIndexPath == nil) || [newIndexPath isEqual:self.fromIndexPath]) {
     return;
   }
 
-  self.selectedItemIndexPath = newIndexPath;
+  self.selectedIndexPath = newIndexPath;
 
   if (_moveHandler) {
     _moveHandler(self.fromIndexPath, self.toIndexPath);
@@ -419,10 +422,13 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
 
 -(void)finishMovingItem
 {
-  UICollectionViewLayoutAttributes *	layoutAttributes = [self layoutAttributesForItemAtIndexPath:self.selectedItemIndexPath];
+  UICollectionViewLayoutAttributes *	layoutAttributes = [self layoutAttributesForItemAtIndexPath:self.selectedIndexPath];
 
   if (_endHandler) {
-    _endHandler(self.toIndexPath);
+    NSIndexPath * indexPath = self.toIndexPath;
+    if (indexPath != nil) {
+      _endHandler(indexPath);
+    }
   }
 
   __block typeof(self) weakSelf = self;
@@ -431,10 +437,10 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
     weakSelf.mockView.center	= layoutAttributes.center;
   };
   void (^completionBlock)(BOOL) = ^(BOOL finished) {
-    weakSelf.selectedItemIndexPath = nil;
-    weakSelf.fromIndexPath	   = nil;
-    weakSelf.toIndexPath	   = nil;
-    weakSelf.mockViewCenter	   = CGPointZero;
+    weakSelf.selectedIndexPath	= nil;
+    weakSelf.fromIndexPath	= nil;
+    weakSelf.toIndexPath	= nil;
+    weakSelf.mockViewCenter	= CGPointZero;
 
     [weakSelf.mockView removeFromSuperview];
     weakSelf.mockView = nil;
@@ -477,8 +483,8 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   [tapGestureRecognizer setDelegate:self];
   for (UIGestureRecognizer * recognizer in recognizers) {
     if ([recognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+      [recognizer requireGestureRecognizerToFail:tapGestureRecognizer];
     }
-    [recognizer requireGestureRecognizerToFail:tapGestureRecognizer];
   }
   [self.collectionView addGestureRecognizer:tapGestureRecognizer];
   self.tapGestureRecognizer = tapGestureRecognizer;
@@ -490,9 +496,6 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
 				initWithTarget:self
 				action:@selector(handlePanGesture:)];
   [panGestureRecognizer setDelegate:self];
-#if	0
-  [panGestureRecognizer requireGestureRecognizerToFail:self.tapGestureRecognizer];
-#endif
   [self.collectionView addGestureRecognizer:panGestureRecognizer];
   self.panGestureRecognizer = panGestureRecognizer;
   [panGestureRecognizer release];
@@ -525,7 +528,7 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   if (self.isEditing) {
     self.editing = NO;
 
-    // XXX:
+    // XXX: 即座に UICollectionView のタップにイベントを戻すための仕掛け
     CGPoint point = [gesture locationInView:self.collectionView];
     NSIndexPath * indexPath = [self.collectionView indexPathForItemAtPoint:point];
     if ([self.collectionView.delegate respondsToSelector:@selector(collectionView:didSelectItemAtIndexPath:)]) {

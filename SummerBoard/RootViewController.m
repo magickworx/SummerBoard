@@ -3,7 +3,7 @@
  * FILE:	RootViewController.m
  * DESCRIPTION:	SummerBoard: Application Root View Controller
  * DATE:	Mon, Aug 19 2013
- * UPDATED:	Mon, Aug 19 2013
+ * UPDATED:	Thu, Aug 29 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.iPhone.MagickWorX.COM/
@@ -101,5 +101,4 @@
   [super viewDidLoad];
 }
 
-/*****************************************************************************/
 @end

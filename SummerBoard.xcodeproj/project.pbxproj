@@ -10,6 +10,7 @@
 		B32B40ED17C33BA10090557D /* CollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B32B40EC17C33BA10090557D /* CollectionLayout.m */; };
 		B334D60217C620F500492F41 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B334D60117C620F500492F41 /* Icon@2x.png */; };
 		B334D60417C620FA00492F41 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B334D60317C620FA00492F41 /* Icon.png */; };
+		B3794F0817CF3564005A55E5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B3794F0717CF3564005A55E5 /* README.md */; };
 		B385C95317C1E83700DD5783 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B385C95217C1E83700DD5783 /* UIKit.framework */; };
 		B385C95517C1E83700DD5783 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B385C95417C1E83700DD5783 /* Foundation.framework */; };
 		B385C95717C1E83800DD5783 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B385C95617C1E83800DD5783 /* CoreGraphics.framework */; };
@@ -30,6 +31,7 @@
 		B32B40EC17C33BA10090557D /* CollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionLayout.m; sourceTree = "<group>"; };
 		B334D60117C620F500492F41 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		B334D60317C620FA00492F41 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B3794F0717CF3564005A55E5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		B385C94F17C1E83700DD5783 /* SummerBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SummerBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B385C95217C1E83700DD5783 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B385C95417C1E83700DD5783 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -70,6 +72,7 @@
 		B385C94617C1E83700DD5783 = {
 			isa = PBXGroup;
 			children = (
+				B3794F0717CF3564005A55E5 /* README.md */,
 				B334D60317C620FA00492F41 /* Icon.png */,
 				B334D60117C620F500492F41 /* Icon@2x.png */,
 				B385C95817C1E83800DD5783 /* SummerBoard */,
@@ -186,6 +189,7 @@
 				B385C96917C1E83800DD5783 /* Default-568h@2x.png in Resources */,
 				B334D60217C620F500492F41 /* Icon@2x.png in Resources */,
 				B334D60417C620FA00492F41 /* Icon.png in Resources */,
+				B3794F0817CF3564005A55E5 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

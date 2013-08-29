@@ -3,7 +3,7 @@
  * FILE:	CollectionView.m
  * DESCRIPTION:	SummerBoard: Collection View Class
  * DATE:	Mon, Aug 19 2013
- * UPDATED:	Thu, Aug 22 2013
+ * UPDATED:	Thu, Aug 29 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
@@ -49,7 +49,6 @@
 {
 @private
   UICollectionView *	_collectionView;
-
   NSMutableArray *	_collectionData;
 
   BOOL	_editing;
@@ -82,11 +81,13 @@
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
     layout.sectionInset = UIEdgeInsetsMake(8.0f, 8.0f, 8.0f, 8.0f);
     layout.itemSize = CGSizeMake(64.0f, 64.0f);
+    // 画面の長押し
     layout.holdHandler = ^(UIGestureRecognizerState state) {
       if (state == UIGestureRecognizerStateBegan) {
 	weakSelf.editing = YES;
       }
     };
+    // ドラッグでセルを移動中
     layout.moveHandler = ^(NSIndexPath * fromIndexPath, NSIndexPath * toIndexPath) {
       [weakSelf.collectionData exchangeObjectAtIndex:fromIndexPath.item
 			       withObjectAtIndex:toIndexPath.item];
@@ -104,6 +105,7 @@
       [weakSelf.collectionView performBatchUpdates:updatesBlock
 			       completion:completionBlock];
     };
+    // ドラッグ完了時に移動先のデータを再読み込み
     layout.endHandler = ^(NSIndexPath * toIndexPath) {
       [weakSelf.collectionView reloadItemsAtIndexPaths:@[toIndexPath]];
     };
@@ -188,7 +190,7 @@
 
   NSNumber *	nval	= [self.collectionData objectAtIndex:[indexPath row]];
   cell.label.text	= [nval stringValue];
-  cell.vibrated		= self.editing;
+  cell.vibrated		= self.isEditing;
   cell.deleteHandler	= ^(CollectionCell * targetCell) {
     [weakSelf removeCell:targetCell];
   };
@@ -205,7 +207,18 @@
     self.editing = NO;
     return;
   }
-  NSLog(@"DEBUG[selected] %@",indexPath);
+
+  // XXX: 実際の処理はここより先に実装する
+  CollectionCell * cell = (CollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+  UIAlertView *	alertView;
+  alertView = [[UIAlertView alloc]
+		initWithTitle:nil
+		message:[NSString stringWithFormat:@"%@",cell.label.text]
+		delegate:nil
+		cancelButtonTitle:NSLocalizedString(@"Close", @"Close")
+		otherButtonTitles:nil];
+  [alertView show];
+  [alertView release];
 }
 
 #if	0
@@ -241,43 +254,35 @@
 #if	0
 -(void)addGestureRecognizers
 {
-#if	0
+  NSArray *	recognizers = [self.collectionView gestureRecognizers];
+
   UITapGestureRecognizer *	doubleTapGestureRecognizer;
   doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc]
 				initWithTarget:self
 				action:@selector(handleDoubleTap:)];
   [doubleTapGestureRecognizer setNumberOfTapsRequired:2];
-  [self addGestureRecognizer:doubleTapGestureRecognizer];
-  [doubleTapGestureRecognizer release];
-#endif
-  NSArray *	recognizers = [self.collectionView gestureRecognizers];
-
-  UILongPressGestureRecognizer *	longPressGestureRecognizer;
-  longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]
-				initWithTarget:self
-				action:@selector(handleLongPress:)];
 
   for (UIGestureRecognizer * recognizer in recognizers) {
-    if ([recognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+    if ([recognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+      [recognizer requireGestureRecognizerToFail:doubleTapGestureRecognizer];
     }
-    [recognizer requireGestureRecognizerToFail:longPressGestureRecognizer];
   }
 
-  [self.collectionView addGestureRecognizer:longPressGestureRecognizer];
-  [longPressGestureRecognizer release];
+  [self addGestureRecognizer:doubleTapGestureRecognizer];
+  [doubleTapGestureRecognizer release];
 }
 
 #pragma mark UITapGestureRecognizer handler
 -(void)handleDoubleTap:(UITapGestureRecognizer *)gesture
 {
-}
+  CGPoint	point = [gesture locationInView:self.collectionView];
+  NSIndexPath *	indexPath = [self.collectionView indexPathForItemAtPoint:point];
+  CollectionCell * cell = (CollectionCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
 
-#pragma mark UILongPressGestureRecognizer handler
--(void)handleLongPress:(UILongPressGestureRecognizer *)gesture
-{
-  if ([gesture state] == UIGestureRecognizerStateBegan) {
-    self.editing = YES;
-  }
+  // XXX: cell に対するダブルタップの処理はここで実装する
+#if	DEBUG
+  NSLog(@"DEBUG[dubleTap] %@",cell.label.text);
+#endif	// DEBUG
 }
 #endif
 

@@ -3,7 +3,7 @@
  * FILE:	CollectionCell.m
  * DESCRIPTION:	SummerBoard: UICollectionViewCell Subclass
  * DATE:	Mon, Aug 19 2013
- * UPDATED:	Tue, Aug 20 2013
+ * UPDATED:	Thu, Aug 29 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
@@ -77,7 +77,7 @@ NSString * const	collectionCellIdentifier = @"CollectionCellIdentifier";
 
     UIView *	view;
     view = [[UIView alloc] initWithFrame:CGRectMake(x, y, w, h)];
-    view.backgroundColor	= [UIColor greenColor];
+    view.backgroundColor	= [UIColor orangeColor];
     view.autoresizingMask	= UIViewAutoresizingFlexibleLeftMargin
 				| UIViewAutoresizingFlexibleRightMargin
 				| UIViewAutoresizingFlexibleTopMargin
@@ -146,6 +146,7 @@ RadianasToDegrees(CGFloat radians)
   return radians * 180.0f / M_PI;
 }
 
+// UIView を揺らす
 #define	kVibrateAnimationKey	@"VibrateAnimationKey"
 -(void)setVibrated:(BOOL)vibrated
 {
@@ -189,21 +190,21 @@ RadianasToDegrees(CGFloat radians)
   UIGraphicsBeginImageContextWithOptions(size, opaque, scale);
   CGContextRef context = UIGraphicsGetCurrentContext();
   CGContextClearRect(context, CGRectMake(0.0f, 0.0f, width, height));
-  //描画の中心点
+  // 描画の中心点
   CGFloat cx = width  * 0.5f;
   CGFloat cy = height * 0.5f;
 
-  //円の半径
+  // 円の半径
   CGFloat radius = width > height ? height * 0.5f : height * 0.5f;
   radius -= 4.0f;
-  //円の範囲
+  // 円の描画領域
   CGRect rectEllipse = CGRectMake(cx - radius, cy - radius, radius * 2.0f, radius * 2.0f);
 
-  //円の中身を描画
+  //円を描画
   CGContextSetRGBFillColor(context, 1.0f, 0.0f, 0.0f, 1.0f);
   CGContextFillEllipseInRect(context, rectEllipse);
 
-  // Xを描画
+  // ×を描画
   CGContextSetRGBStrokeColor(context, 1.0f, 1.0f, 1.0f, 1.0f);
   CGContextSetLineWidth(context, 2.0f);
   CGFloat lineLength  = radius / 2.5f;
@@ -215,12 +216,12 @@ RadianasToDegrees(CGFloat radians)
   CGContextAddLineToPoint(context, cx-lineLength, cy+lineLength);
   CGContextDrawPath(context, kCGPathFillStroke);
 
-  // 円の線を描画
-  // 陰
+  // 影を落とす
   CGContextSetShadow(context, CGSizeMake(3.0f, 3.0f), 2.0f);
   CGContextStrokeEllipseInRect(context, rectEllipse);
 
 
+  // 影付き赤丸×ボタン画像を生成
   UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
 
@@ -243,11 +244,12 @@ RadianasToDegrees(CGFloat radians)
 
 /******************************************************************************/
 
+// ドラッグ時に表示する画像を動的に作成
 -(UIImage *)rasterizedImage
 {
   CGSize	size	= self.view.bounds.size;
-  BOOL		opaque	= self.view.isOpaque;
-  CGFloat	scale	= 0.0f;
+  BOOL		opaque	= NO;	// NO   : 透過, YES : 不透過
+  CGFloat	scale	= 0.0f;	// 0.0f : 自動調整, 2.0f : Retina 1.0f, : 標準
   CALayer *	layer	= self.view.layer;
   UIGraphicsBeginImageContextWithOptions(size, opaque, scale);
   [layer renderInContext:UIGraphicsGetCurrentContext()];

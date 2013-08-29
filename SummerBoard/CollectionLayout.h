@@ -3,7 +3,7 @@
  * FILE:	CollectionLayout.h
  * DESCRIPTION:	SummerBoard: UICollectionViewFlowLayout Subclass
  * DATE:	Tue, Aug 20 2013
- * UPDATED:	Thu, Aug 22 2013
+ * UPDATED:	Thu, Aug 29 2013
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
@@ -47,9 +47,9 @@ typedef void (^CollectionLayoutEndHandler)(NSIndexPath * toIndexPath);
 @interface CollectionLayout : UICollectionViewFlowLayout
 {
 @private
-  CollectionLayoutHoldHandler	_holdHandler;
-  CollectionLayoutMoveHandler	_moveHandler;
-  CollectionLayoutEndHandler	_endHandler;
+  CollectionLayoutHoldHandler	_holdHandler;	// 画面の長押し時に呼び出される
+  CollectionLayoutMoveHandler	_moveHandler;	// ドラッグ中に呼び出される
+  CollectionLayoutEndHandler	_endHandler;	// ドラッグ完了時に呼び出される
 }
 @property (nonatomic,copy) CollectionLayoutHoldHandler	holdHandler;
 @property (nonatomic,copy) CollectionLayoutMoveHandler	moveHandler;
