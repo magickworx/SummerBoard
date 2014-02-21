@@ -3,14 +3,14 @@
  * FILE:	CollectionCell.m
  * DESCRIPTION:	SummerBoard: UICollectionViewCell Subclass
  * DATE:	Mon, Aug 19 2013
- * UPDATED:	Thu, Aug 29 2013
+ * UPDATED:	Fri, Feb 21 2014
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
- * COPYRIGHT:	(c) 2013 阿部康一／Kouichi ABE (WALL), All rights reserved.
+ * COPYRIGHT:	(c) 2013-2014 阿部康一／Kouichi ABE (WALL), All rights reserved.
  * LICENSE:
  *
- *  Copyright (c) 2013 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
+ *  Copyright (c) 2013-2014 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -40,20 +40,16 @@
  *
  *****************************************************************************/
 
-#import <QuartzCore/QuartzCore.h>
+@import QuartzCore;
+
 #import "CollectionCell.h"
 
-NSString * const	collectionCellIdentifier = @"CollectionCellIdentifier";
+NSString * const	kCollectionCellIdentifier = @"CollectionCellIdentifier";
 
 @interface CollectionCell ()
-{
-@private
-  UIView *	_view;
-  UIButton *	_button;
-}
-@property (nonatomic,retain) UIView *			view;
-@property (nonatomic,retain) UIButton *			button;
-@property (nonatomic,retain,readwrite) UILabel *	label;
+@property (nonatomic,strong) UIView *			view;
+@property (nonatomic,strong) UIButton *			button;
+@property (nonatomic,strong,readwrite) UILabel *	label;
 @end
 
 @implementation CollectionCell
@@ -84,7 +80,6 @@ NSString * const	collectionCellIdentifier = @"CollectionCellIdentifier";
 				| UIViewAutoresizingFlexibleBottomMargin;
     [self.contentView addSubview:view];
     self.view = view;
-    [view release];
 
 
     UILabel *	label;
@@ -94,7 +89,6 @@ NSString * const	collectionCellIdentifier = @"CollectionCellIdentifier";
     label.backgroundColor	= [UIColor clearColor];
     [self.view addSubview:label];
     self.label = label;
-    [label release];
 
     w = 24.0f;
     h = 24.0f;
@@ -113,15 +107,6 @@ NSString * const	collectionCellIdentifier = @"CollectionCellIdentifier";
     layer.masksToBounds	= YES;
   }
   return self;
-}
-
--(void)dealloc
-{
-  [_deleteHandler release];
-  [_view release];
-  [_button release];
-  [_label release];
-  [super dealloc];
 }
 
 -(void)prepareForReuse
@@ -162,7 +147,7 @@ RadianasToDegrees(CGFloat radians)
     animation.duration	= 0.1;
     animation.fromValue	= [NSNumber numberWithFloat:DegreesToRadians(2.0f)];
     animation.toValue	= [NSNumber numberWithFloat:DegreesToRadians(-2.0f)];
-    animation.repeatCount	= 1e100f;
+    animation.repeatCount	= INFINITY;
     animation.autoreverses	= YES;
     [self.layer addAnimation:animation forKey:kVibrateAnimationKey];
   }
@@ -173,7 +158,6 @@ RadianasToDegrees(CGFloat radians)
 
   _vibrated = vibrated;
 }
-
 
 /*****************************************************************************/
 

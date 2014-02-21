@@ -3,14 +3,14 @@
  * FILE:	RootViewController.m
  * DESCRIPTION:	SummerBoard: Application Root View Controller
  * DATE:	Mon, Aug 19 2013
- * UPDATED:	Thu, Aug 29 2013
+ * UPDATED:	Fri, Feb 21 2014
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.iPhone.MagickWorX.COM/
- * COPYRIGHT:	(c) 2013 阿部康一／Kouichi ABE (WALL), All rights reserved.
+ * COPYRIGHT:	(c) 2013-2014 阿部康一／Kouichi ABE (WALL), All rights reserved.
  * LICENSE:
  *
- *  Copyright (c) 2013 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
+ *  Copyright (c) 2013-2014 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -44,11 +44,7 @@
 #import "CollectionView.h"
 
 @interface RootViewController ()
-{
-@private
-  CollectionView *	_collectionView;
-}
-@property (nonatomic,retain) CollectionView *	collectionView;
+@property (nonatomic,strong) CollectionView *	collectionView;
 @end
 
 @implementation RootViewController
@@ -65,9 +61,6 @@
 -(void)dealloc
 {
   if ([_collectionView superview]) { [_collectionView removeFromSuperview]; }
-
-  [_collectionView release];
-  [super dealloc];
 }
 
 -(void)didReceiveMemoryWarning
@@ -86,16 +79,10 @@
 {
   [super loadView];
 
-  CGRect	frame = self.view.bounds;
-#if	0
-  frame.size.height  -= [[self navigationController] navigationBar].bounds.size.height;
-#endif
-
   CollectionView *	collectionView;
-  collectionView = [[CollectionView alloc] initWithFrame:frame];
+  collectionView = [[CollectionView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:collectionView];
   self.collectionView = collectionView;
-  [collectionView release];
 }
 
 -(void)viewDidLoad

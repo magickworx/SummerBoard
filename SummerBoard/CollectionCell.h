@@ -3,14 +3,14 @@
  * FILE:	CollectionCell.h
  * DESCRIPTION:	SummerBoard: UICollectionViewCell Subclass
  * DATE:	Mon, Aug 19 2013
- * UPDATED:	Tue, Aug 20 2013
+ * UPDATED:	Fri, Feb 21 2014
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
- * COPYRIGHT:	(c) 2013 阿部康一／Kouichi ABE (WALL), All rights reserved.
+ * COPYRIGHT:	(c) 2013-2014 阿部康一／Kouichi ABE (WALL), All rights reserved.
  * LICENSE:
  *
- *  Copyright (c) 2013 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
+ *  Copyright (c) 2013-2014 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -40,23 +40,15 @@
  *
  *****************************************************************************/
 
-extern NSString * const	collectionCellIdentifier;
+extern NSString * const	kCollectionCellIdentifier;
 
 @class	CollectionCell;
 
 typedef void (^CollectionCellDeleteHandler)(CollectionCell * cell);
 
 @interface CollectionCell : UICollectionViewCell
-{
-@private
-  CollectionCellDeleteHandler	_deleteHandler;
-
-  UILabel *	_label;
-
-  BOOL		_vibrated;
-}
 @property (nonatomic,copy)  CollectionCellDeleteHandler	deleteHandler;
-@property (nonatomic,retain,readonly) UILabel *	label;
+@property (nonatomic,strong,readonly) UILabel *	label;
 @property (nonatomic,getter=isVibrated) BOOL	vibrated;
 
 -(UIImage *)rasterizedImage;

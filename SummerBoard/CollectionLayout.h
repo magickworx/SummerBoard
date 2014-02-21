@@ -3,14 +3,14 @@
  * FILE:	CollectionLayout.h
  * DESCRIPTION:	SummerBoard: UICollectionViewFlowLayout Subclass
  * DATE:	Tue, Aug 20 2013
- * UPDATED:	Thu, Aug 29 2013
+ * UPDATED:	Fri, Feb 21 2014
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
- * COPYRIGHT:	(c) 2013 阿部康一／Kouichi ABE (WALL), All rights reserved.
+ * COPYRIGHT:	(c) 2013-2014 阿部康一／Kouichi ABE (WALL), All rights reserved.
  * LICENSE:
  *
- *  Copyright (c) 2013 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
+ *  Copyright (c) 2013-2014 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -45,13 +45,10 @@ typedef void (^CollectionLayoutMoveHandler)(NSIndexPath * fromIndexPath, NSIndex
 typedef void (^CollectionLayoutEndHandler)(NSIndexPath * toIndexPath);
 
 @interface CollectionLayout : UICollectionViewFlowLayout
-{
-@private
-  CollectionLayoutHoldHandler	_holdHandler;	// 画面の長押し時に呼び出される
-  CollectionLayoutMoveHandler	_moveHandler;	// ドラッグ中に呼び出される
-  CollectionLayoutEndHandler	_endHandler;	// ドラッグ完了時に呼び出される
-}
+// 画面の長押し時に呼び出される
 @property (nonatomic,copy) CollectionLayoutHoldHandler	holdHandler;
+// ドラッグ中に呼び出される
 @property (nonatomic,copy) CollectionLayoutMoveHandler	moveHandler;
+// ドラッグ完了時に呼び出される
 @property (nonatomic,copy) CollectionLayoutEndHandler	endHandler;
 @end

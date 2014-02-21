@@ -14,9 +14,9 @@ Features
 Requirements
 ============
 
- - non-ARC
- - iOS 6
- - Xcode 4.5
+ - ARC
+ - iOS 7
+ - Xcode 5.0
 
 References
 ==========

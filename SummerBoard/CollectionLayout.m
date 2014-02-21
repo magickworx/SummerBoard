@@ -3,14 +3,14 @@
  * FILE:	CollectionLayout.m
  * DESCRIPTION:	SummerBoard: UICollectionViewFlowLayout Subclass
  * DATE:	Tue, Aug 20 2013
- * UPDATED:	Thu, Aug 29 2013
+ * UPDATED:	Fri, Feb 21 2014
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
- * COPYRIGHT:	(c) 2013 阿部康一／Kouichi ABE (WALL), All rights reserved.
+ * COPYRIGHT:	(c) 2013-2014 阿部康一／Kouichi ABE (WALL), All rights reserved.
  * LICENSE:
  *
- *  Copyright (c) 2013 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
+ *  Copyright (c) 2013-2014 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,8 @@
  *
  *****************************************************************************/
 
-#import <QuartzCore/QuartzCore.h>
+@import QuartzCore;
+
 #import <objc/runtime.h>
 #import "CollectionLayout.h"
 #import "CollectionCell.h"
@@ -87,37 +88,18 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
 
 
 @interface CollectionLayout () <UIGestureRecognizerDelegate>
-{
-@private
-  CADisplayLink *	_displayLink;
-  CGFloat		_scrollingSpeed;
-  UIEdgeInsets		_scrollingTriggerEdgeInsets;
-
-  NSIndexPath *	_selectedIndexPath;
-  NSIndexPath *	_fromIndexPath;
-  NSIndexPath *	_toIndexPath;
-  UIImageView *	_mockView;
-  CGPoint	_mockViewCenter;
-  CGPoint	_panTranslation;
-
-  UILongPressGestureRecognizer *	_longPressGestureRecognizer;
-  UITapGestureRecognizer *		_tapGestureRecognizer;
-  UIPanGestureRecognizer *		_panGestureRecognizer;
-
-  BOOL	_editing;
-}
-@property (nonatomic,retain) CADisplayLink *	displayLink;
+@property (nonatomic,strong) CADisplayLink *	displayLink;
 @property (nonatomic,assign) CGFloat		scrollingSpeed;
 @property (nonatomic,assign) UIEdgeInsets	scrollingTriggerEdgeInsets;
-@property (nonatomic,retain) NSIndexPath *	selectedIndexPath;
-@property (nonatomic,retain) NSIndexPath *	fromIndexPath;
-@property (nonatomic,retain) NSIndexPath *	toIndexPath;
-@property (nonatomic,retain) UIImageView *	mockView;
+@property (nonatomic,strong) NSIndexPath *	selectedIndexPath;
+@property (nonatomic,strong) NSIndexPath *	fromIndexPath;
+@property (nonatomic,strong) NSIndexPath *	toIndexPath;
+@property (nonatomic,strong) UIImageView *	mockView;
 @property (nonatomic,assign) CGPoint		mockViewCenter;
 @property (nonatomic,assign) CGPoint		panTranslation;
-@property (nonatomic,retain) UILongPressGestureRecognizer *	longPressGestureRecognizer;
-@property (nonatomic,retain) UITapGestureRecognizer *	tapGestureRecognizer;
-@property (nonatomic,retain) UIPanGestureRecognizer *	panGestureRecognizer;
+@property (nonatomic,strong) UILongPressGestureRecognizer *	longPressGestureRecognizer;
+@property (nonatomic,strong) UITapGestureRecognizer *	tapGestureRecognizer;
+@property (nonatomic,strong) UIPanGestureRecognizer *	panGestureRecognizer;
 @property (nonatomic,getter=isEditing) BOOL	editing;
 @end
 
@@ -150,19 +132,6 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   [self invalidateScrollTimer];
 
   [self removeObserver:self forKeyPath:kCollectionViewKeyPath];
-
-  [_holdHandler release];
-  [_moveHandler release];
-  [_endHandler release];
-  [_displayLink release];
-  [_selectedIndexPath release];
-  [_fromIndexPath release];
-  [_toIndexPath release];
-  [_mockView release];
-  [_longPressGestureRecognizer release];
-  [_tapGestureRecognizer release];
-  [_panGestureRecognizer release];
-  [super dealloc];
 }
 
 #pragma mark UICollectionViewLayout override
@@ -385,7 +354,6 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   imageView.alpha = 0.0f;
   [self.collectionView addSubview:imageView];
   self.mockView	  = imageView;
-  [imageView release];
 
   self.mockViewCenter = self.mockView.center;
 
@@ -472,7 +440,6 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   }
   [self.collectionView addGestureRecognizer:longPressGestureRecognizer];
   self.longPressGestureRecognizer = longPressGestureRecognizer;
-  [longPressGestureRecognizer release];
 
 
   UITapGestureRecognizer *	tapGestureRecognizer;
@@ -488,7 +455,6 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   }
   [self.collectionView addGestureRecognizer:tapGestureRecognizer];
   self.tapGestureRecognizer = tapGestureRecognizer;
-  [tapGestureRecognizer release];
 
 
   UIPanGestureRecognizer *	panGestureRecognizer;
@@ -498,7 +464,6 @@ typedef NS_ENUM(NSInteger, kScrollingDirection) {
   [panGestureRecognizer setDelegate:self];
   [self.collectionView addGestureRecognizer:panGestureRecognizer];
   self.panGestureRecognizer = panGestureRecognizer;
-  [panGestureRecognizer release];
 }
 
 #pragma mark UILongPressGestureRecognizer handler

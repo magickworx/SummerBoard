@@ -3,14 +3,14 @@
  * FILE:	CollectionView.m
  * DESCRIPTION:	SummerBoard: Collection View Class
  * DATE:	Mon, Aug 19 2013
- * UPDATED:	Thu, Aug 29 2013
+ * UPDATED:	Fri, Feb 21 2014
  * AUTHOR:	Kouichi ABE (WALL) / 阿部康一
  * E-MAIL:	kouichi@MagickWorX.COM
  * URL:		http://www.MagickWorX.COM/
- * COPYRIGHT:	(c) 2013 阿部康一／Kouichi ABE (WALL), All rights reserved.
+ * COPYRIGHT:	(c) 2013-2014 阿部康一／Kouichi ABE (WALL), All rights reserved.
  * LICENSE:
  *
- *  Copyright (c) 2013 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
+ *  Copyright (c) 2013-2014 Kouichi ABE (WALL) <kouichi@MagickWorX.COM>,
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -40,21 +40,15 @@
  *
  *****************************************************************************/
 
-#import <QuartzCore/QuartzCore.h>
+@import QuartzCore;
+
 #import "CollectionView.h"
 #import "CollectionCell.h"
 #import "CollectionLayout.h"
 
 @interface CollectionView () <UICollectionViewDelegate,UICollectionViewDataSource>
-{
-@private
-  UICollectionView *	_collectionView;
-  NSMutableArray *	_collectionData;
-
-  BOOL	_editing;
-}
-@property (nonatomic,retain) UICollectionView *	collectionView;
-@property (nonatomic,retain) NSMutableArray *	collectionData;
+@property (nonatomic,strong) UICollectionView *	collectionView;
+@property (nonatomic,strong) NSMutableArray *	collectionData;
 @property (nonatomic,getter=isEditing) BOOL	editing;
 @end
 
@@ -92,13 +86,8 @@
       [weakSelf.collectionData exchangeObjectAtIndex:fromIndexPath.item
 			       withObjectAtIndex:toIndexPath.item];
       void (^updatesBlock)(void) = ^{
-#if	0
-	[weakSelf.collectionView deleteItemsAtIndexPaths:@[fromIndexPath]];
-	[weakSelf.collectionView insertItemsAtIndexPaths:@[toIndexPath]];
-#else
 	[weakSelf.collectionView moveItemAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
 	[weakSelf.collectionView moveItemAtIndexPath:toIndexPath toIndexPath:fromIndexPath];
-#endif
       };
       void (^completionBlock)(BOOL) = ^(BOOL finished) {
       };
@@ -114,18 +103,16 @@
     collectionView = [[UICollectionView alloc]
 		      initWithFrame:self.bounds
 		      collectionViewLayout:layout];
-    [layout release];
     [collectionView registerClass:[CollectionCell class]
-		    forCellWithReuseIdentifier:collectionCellIdentifier];
+		    forCellWithReuseIdentifier:kCollectionCellIdentifier];
     self.backgroundColor		= [UIColor blackColor];
     collectionView.delegate		= self;
     collectionView.dataSource		= self;
     collectionView.scrollEnabled	= YES;
     [self addSubview:collectionView];
     self.collectionView = collectionView;
-    [collectionView release];
 
-    _collectionData = [NSMutableArray new];
+    self.collectionData = [NSMutableArray new];
     for (NSInteger n = 1; n <= 31; n++) {
       [_collectionData addObject:[NSNumber numberWithInteger:n]];
     }
@@ -136,14 +123,7 @@
   return self;
 }
 
--(void)dealloc
-{
-  [_collectionView release];
-  [_collectionData release];
-  [super dealloc];
-}
-
--(void)realodData
+-(void)reloadData
 {
   [self.collectionView reloadData];
 }
@@ -186,9 +166,9 @@
   __block typeof(self) weakSelf = self;
 
   CollectionCell *	cell;
-  cell = (CollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:collectionCellIdentifier forIndexPath:indexPath];
+  cell = (CollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kCollectionCellIdentifier forIndexPath:indexPath];
 
-  NSNumber *	nval	= [self.collectionData objectAtIndex:[indexPath row]];
+  NSNumber *	nval	= self.collectionData[[indexPath row]];
   cell.label.text	= [nval stringValue];
   cell.vibrated		= self.isEditing;
   cell.deleteHandler	= ^(CollectionCell * targetCell) {
@@ -218,7 +198,6 @@
 		cancelButtonTitle:NSLocalizedString(@"Close", @"Close")
 		otherButtonTitles:nil];
   [alertView show];
-  [alertView release];
 }
 
 #if	0
@@ -269,7 +248,6 @@
   }
 
   [self addGestureRecognizer:doubleTapGestureRecognizer];
-  [doubleTapGestureRecognizer release];
 }
 
 #pragma mark UITapGestureRecognizer handler
